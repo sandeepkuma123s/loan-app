@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request
 import pickle
 import numpy as np
+import os
 
 app = Flask(__name__)
 
-# Load trained model
-model = pickle.load(open("model.pkl", "rb"))
+# ✅ Load model safely (important for Render)
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.pkl")
+model = pickle.load(open(MODEL_PATH, "rb"))
 
 @app.route('/')
 def home():
@@ -14,14 +16,12 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Numerical inputs
         ApplicantIncome = float(request.form['ApplicantIncome'])
         CoapplicantIncome = float(request.form['CoapplicantIncome'])
         LoanAmount = float(request.form['LoanAmount'])
         Loan_Amount_Term = float(request.form['Loan_Amount_Term'])
         Credit_History = float(request.form['Credit_History'])
 
-        # Categorical (encoded values)
         Gender_Male = int(request.form['Gender_Male'])
         Married_Yes = int(request.form['Married_Yes'])
 
@@ -35,8 +35,7 @@ def predict():
         Property_Area_Semiurban = int(request.form['Property_Area_Semiurban'])
         Property_Area_Urban = int(request.form['Property_Area_Urban'])
 
-        # Feature order MUST match training dataset
-        features = np.array([[
+        features = np.array([[ 
             ApplicantIncome,
             CoapplicantIncome,
             LoanAmount,
@@ -55,15 +54,13 @@ def predict():
 
         prediction = model.predict(features)[0]
 
-        if prediction == 1:
-            result = "Loan Approved ✅"
-        else:
-            result = "Loan Rejected ❌"
+        result = "Loan Approved ✅" if prediction == 1 else "Loan Rejected ❌"
 
         return render_template("index.html", prediction_text=result)
 
     except Exception as e:
         return f"Error: {str(e)}"
 
+# ✅ IMPORTANT for Render (no debug=True)
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
