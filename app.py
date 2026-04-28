@@ -5,8 +5,8 @@ import os
 
 app = Flask(__name__)
 
-# ✅ Load model safely (important for Render)
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.pkl")
+# ✅ Correct path
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "model.pkl")
 model = pickle.load(open(MODEL_PATH, "rb"))
 
 @app.route('/')
@@ -36,20 +36,12 @@ def predict():
         Property_Area_Urban = int(request.form['Property_Area_Urban'])
 
         features = np.array([[ 
-            ApplicantIncome,
-            CoapplicantIncome,
-            LoanAmount,
-            Loan_Amount_Term,
-            Credit_History,
-            Gender_Male,
-            Married_Yes,
-            Dependents_1,
-            Dependents_2,
-            Dependents_3,
-            Education_Not_Graduate,
-            Self_Employed_Yes,
-            Property_Area_Semiurban,
-            Property_Area_Urban
+            ApplicantIncome, CoapplicantIncome, LoanAmount,
+            Loan_Amount_Term, Credit_History,
+            Gender_Male, Married_Yes,
+            Dependents_1, Dependents_2, Dependents_3,
+            Education_Not_Graduate, Self_Employed_Yes,
+            Property_Area_Semiurban, Property_Area_Urban
         ]])
 
         prediction = model.predict(features)[0]
@@ -61,6 +53,5 @@ def predict():
     except Exception as e:
         return f"Error: {str(e)}"
 
-# ✅ IMPORTANT for Render (no debug=True)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
