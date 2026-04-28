@@ -7,7 +7,8 @@ A Machine Learning based web application that predicts whether a loan will be **
 
 ## 🚀 Live Demo
 
-👉 (Add your Render link here after deployment)
+👉 https://loan-app-2-fxwh.onrender.com
+
 
 ---
 
@@ -119,7 +120,7 @@ http://127.0.0.1:5000
 
 ## 📸 Screenshot
 
-(Add your project screenshot here)
+<img width="1909" height="902" alt="image" src="https://github.com/user-attachments/assets/ea58e2f7-533b-47e4-962f-4b47b80d563b" />
 
 ---
 
@@ -141,7 +142,7 @@ http://127.0.0.1:5000
 ## ⭐ If you like this project
 
 Give it a ⭐ on GitHub!
-<img width="1909" height="902" alt="image" src="https://github.com/user-attachments/assets/ea58e2f7-533b-47e4-962f-4b47b80d563b" />
+
 https://loan-app-2-fxwh.onrender.com
 
 
